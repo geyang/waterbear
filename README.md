@@ -62,3 +62,4 @@ test_args = Bear(**test_dict, **{'ha': 'ha', 'no': 'no'})
 assert test_args.ha == 'ha', 'key ha should be ha'
 ```
 
+\* image credit goes to BBC [waterbear: The Smallest Bear!](http://www.bbc.com/earth/story/20150313-the-toughest-animals-on-earth) 😛
