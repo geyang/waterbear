@@ -1,19 +1,19 @@
 ![waterbear_is_a_bear](waterbear.jpg)
-# waterbear, A utility that makes python dictionary accessible with the dot notation
+# Waterbear, A Utility That Makes Python Dictionary Accessible With The Dot Notation
 
 Now introducing the smallest bear! **Waterbear**.
 
 Waterbear makes it easy to use python dictionaries with dot notation!
 
 ## Todos
-- [ ] merge `python2.7` version with `python3`.
+- [ ] merge `python2.7` version with `python3`
+- [ ] make another package called `tardigrade `
 
 ## Installation 
 
 ```python
-pip install waterbear
+pip install waterbear # unfortuantely, tardigrade wouldn't work.
 ```
-
 ## Usage
 For more usage examples, take a look at the [test.py](./waterbear/test_waterbear.py)
 ```python
@@ -63,3 +63,4 @@ assert test_args.ha == 'ha', 'key ha should be ha'
 ```
 
 \* image credit goes to BBC [waterbear: The Smallest Bear!](http://www.bbc.com/earth/story/20150313-the-toughest-animals-on-earth) 😛
+![tardigrade](waterbear_2.jpg)
