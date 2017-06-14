@@ -8,6 +8,7 @@ setup(name='waterbear',
       author='Ge Yang',
       author_email='yangge1987@gmail.com',
       license=None,
+      keywords=['waterbear', 'dict', 'dot-notation'],
       classifiers=[
           'Development Status :: 4 - Beta',
           'Intended Audience :: Science/Research',

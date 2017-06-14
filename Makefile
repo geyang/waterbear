@@ -10,3 +10,5 @@ dev:
 	pip install dist/waterbear*.whl
 publish:
 	twine upload dist/*
+test:
+	pytest

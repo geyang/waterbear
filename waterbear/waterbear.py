@@ -47,36 +47,3 @@ class Bear():
         else:
             self.__d[key] = value
 
-
-if __name__ == "__main__":
-    # test dictionary to object
-    test_dict = {
-        'a': 0,
-        'b': 1
-    }
-
-    test_args = Bear(**test_dict)
-    assert test_args.a == 0
-    assert test_args.b == 1
-    test_args.haha = 0
-    assert test_args.haha == 0
-    test_args.haha = {'a': 1}
-    assert test_args.haha != {'a': 1}
-    assert vars(test_args.haha) == {'a': 1}
-    assert test_args.haha.a == 1
-    assert test_args.__dict__['haha']['a'] == 1
-    assert vars(test_args)['haha']['a'] == 1
-    print(test_args)
-
-    test_args = Bear(__recursive=False, **test_dict)
-    assert test_args.__is_recursive == False
-    assert test_args.a == 0
-    assert test_args.b == 1
-    test_args.haha = {'a': 1}
-    assert test_args.haha['a'] == 1
-    assert test_args.haha == {'a': 1}
-
-
-    # Some other usage patterns
-    test_args = Bear(**test_dict, **{'ha': 'ha', 'no': 'no'})
-    print(test_args.ha)
