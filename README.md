@@ -62,5 +62,20 @@ test_args = Bear(**test_dict, **{'ha': 'ha', 'no': 'no'})
 assert test_args.ha == 'ha', 'key ha should be ha'
 ```
 
+## To Develop
+
+```python
+git clone https://github.com/episodeyang/waterbear.git
+cd waterbear
+make dev
+```
+
+This `make dev` command should build the wheel and install it in your current python environment. Take a look at the [./Makefile](./Makefile) for details.
+
+**To publish**, first update the version number, then do:
+```bash
+make publish
+```
+
 \* image credit goes to BBC [waterbear: The Smallest Bear!](http://www.bbc.com/earth/story/20150313-the-toughest-animals-on-earth) 😛
 ![tardigrade](waterbear_2.jpg)
