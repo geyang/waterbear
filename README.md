@@ -1,5 +1,5 @@
 ![waterbear_is_a_bear](waterbear.jpg)
-# Waterbear, A Utility That Makes Python Dictionary Accessible With The Dot Notation
+# `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation
 
 Now introducing the smallest bear! **Waterbear**.
 
