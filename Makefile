@@ -9,6 +9,7 @@ dev:
 	make wheel
 	pip install dist/waterbear*.whl
 publish:
+	make test
 	make wheel
 	twine upload dist/*
 test:
