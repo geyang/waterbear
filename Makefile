@@ -7,7 +7,7 @@ wheel:
 	python setup.py bdist_wheel
 dev:
 	make wheel
-	pip install dist/waterbear*.whl
+	pip install --ignore-installed dist/waterbear*.whl
 publish:
 	make test
 	make wheel
