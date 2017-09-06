@@ -15,6 +15,11 @@ class Bear():
         else:
             __recursive = True
         self.__is_recursive = __recursive
+        if '__default' in d:
+            __default = d['__default']
+            del d['__default']
+            self.__default = __default
+            self.__has_default = True
         # keep the input as a reference. Destructuring breaks this reference.
         self.__d = d
 
@@ -25,8 +30,18 @@ class Bear():
         return str(self.__dict__)
 
     def __getattr__(self, key):
-        value = self.__d[key]
-        if type(value) == type({}) and self.__is_recursive:
+        try:
+            value = self.__d[key]
+        except KeyError:
+            if self.__has_default:
+                factory = self.__default
+                if callable(factory):
+                    value = factory()
+                else:
+                    value = factory
+            else:
+                raise KeyError(key, "does not exist")
+        if type(value) == dict and self.__is_recursive:
             return Bear(**value)
         else:
             return value
@@ -36,6 +51,10 @@ class Bear():
             return super().__getattribute__("__d")
         elif key in ["_Bear__is_recursive", "__is_recursive"]:
             return super().__getattribute__("__is_recursive")
+        elif key in ["_Bear__default", "__default"]:
+            return super().__getattribute__("__default")
+        elif key in ["_Bear__has_default", "__has_default"]:
+            return super().__getattribute__("__has_default")
         else:
             return super().__getattr__(key)
 
@@ -44,6 +63,14 @@ class Bear():
             super().__setattr__("__d", value)
         elif key == "_Bear__is_recursive":
             super().__setattr__("__is_recursive", value)
+        elif key == "_Bear__default":
+            super().__setattr__("__default", value)
+        elif key == "_Bear__has_default":
+            super().__setattr__("__has_default", value)
         else:
             self.__d[key] = value
 
+
+class DefaultBear(Bear):
+    def __init__(self, default, **d):
+        super().__init__(__default=default, **d)

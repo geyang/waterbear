@@ -1,5 +1,5 @@
 ![waterbear_is_a_bear](waterbear.jpg)
-# `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation
+# `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
 
 Now introducing the smallest bear! **Waterbear**.
 
@@ -15,7 +15,12 @@ Waterbear makes it easy to use python dictionaries with dot notation!
 pip install waterbear # unfortuantely, tardigrade wouldn't work.
 ```
 ## Usage
-For more usage examples, take a look at the [test.py](./waterbear/test_waterbear.py)
+For more usage examples, take a look at the [test.py](./waterbear/test_waterbear.py)!
+
+There are two classes, the `Bear` and the `DefaultBear`. Default Bear allows you to pass in a
+default factory as the first argument. `Bear` allows you do do so via a keyword argument `__default`
+
+Example usage below:
 ```python
 # Waterbear is a bear!
 from waterbear import Bear
@@ -23,6 +28,13 @@ from waterbear import Bear
 waterbear = Bear(**{"key": 100})
 assert waterbear.key == 100, 'now waterbear.key is accessible!'
 
+bear = DefaultBear(None, a=10, b=100)
+assert vars(bear) == {'a': 10, 'b': 100}
+
+assert bear.does_not_exist is None, "default value works"
+
+bear = DefaultBear(tuple, a=10, b=100)
+assert bear.does_not_exist is (), "default factory also works!"
 
 test_dict = {
     'a': 0,

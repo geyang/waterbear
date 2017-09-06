@@ -1,4 +1,4 @@
-from .waterbear import Bear
+from .waterbear import Bear, DefaultBear
 
 
 def test():
@@ -32,3 +32,15 @@ def test():
     # Some other usage patterns
     test_args = Bear(**test_dict, **{'ha': 'ha', 'no': 'no'})
     assert test_args.ha == 'ha', 'key ha should be ha'
+
+
+def test_default_bear():
+    bear = DefaultBear(None, a=10, b=100)
+    assert vars(bear) == {'a': 10, 'b': 100}
+
+    assert bear.does_not_exist is None
+
+    bear = DefaultBear(tuple, a=10, b=100)
+    assert bear.does_not_exist is ()
+
+

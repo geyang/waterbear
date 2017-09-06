@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(name='waterbear',
       description='A utility that makes it easy to use dot notation with python dictionaries',
-      long_description='waterbear makes it easy to use dictionaries in python with the dot notation',
-      version='0.0.0',
+      long_description='`waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values',
+      version='1.0.0',
       url='https://github.com/episodeyang/waterbear',
       author='Ge Yang',
       author_email='yangge1987@gmail.com',
