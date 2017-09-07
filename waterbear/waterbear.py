@@ -32,6 +32,9 @@ class Bear():
         logging.debug("__getattribute__({})".format(item))
         return object.__getattribute__(self, item)
 
+    def __deepcopy__(self, memodict={}):
+        raise NotImplementedError('todo: need to implement deepcopy')
+
     @property
     def __dict__(self):
         logging.debug("__dict__()")
