@@ -1,7 +1,9 @@
-author=$(Ge Yang)
-author_email=$(yangge1987@gmail.com)
 # tips from https://stackoverflow.com/a/6922447/1560241
 SHELL:=/bin/bash -O extglob
+
+author=$(Ge Yang)
+author_email=$(yangge1987@gmail.com)
+
 # notes on python packaging: http://python-packaging.readthedocs.io/en/latest/minimal.html
 default: ;
 wheel:
