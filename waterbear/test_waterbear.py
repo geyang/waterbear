@@ -65,6 +65,9 @@ def test_as_dict_items():
     del bear['a']
     assert bear['a'] is None
 
+    bear.update(b=101)
+    assert bear['b'] == 101
+
 
 def test_dict_update():
     bear = DefaultBear(None, a=10, b=100)
