@@ -1,9 +1,16 @@
+from os import path
+
 from setuptools import setup
+
+here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, 'README'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(name='waterbear',
       description='A utility that makes it easy to use dot notation with python dictionaries',
-      long_description='`waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values',
-      version='1.1.1',
+      long_description=long_description,
+      version='1.1.2',
       url='https://github.com/episodeyang/waterbear',
       author='Ge Yang',
       author_email='yangge1987@gmail.com',
