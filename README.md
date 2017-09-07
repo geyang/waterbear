@@ -21,21 +21,45 @@ There are two classes, the `Bear` and the `DefaultBear`. Default Bear allows you
 default factory as the first argument. `Bear` allows you do do so via a keyword argument `__default`
 
 Example usage below:
+
 ```python
 # Waterbear is a bear!
 from waterbear import Bear
 
 waterbear = Bear(**{"key": 100})
 assert waterbear.key == 100, 'now waterbear.key is accessible!'
+assert waterbear['key'] == 100, 'item access syntax is also supported!'
+```
 
+### Similar to `collection.defaultdict`, there is `DefaultBear`
+
+```python
 bear = DefaultBear(None, a=10, b=100)
 assert vars(bear) == {'a': 10, 'b': 100}
 
 assert bear.does_not_exist is None, "default value works"
+```
 
+#### Support default Factories
+
+```python
 bear = DefaultBear(tuple, a=10, b=100)
 assert bear.does_not_exist is (), "default factory also works!"
+```
 
+### You can also use it with `vars`, `str`, `print(repr)`, `dict` etc.
+
+```python
+bear = Bear(a=10, b=100)
+assert str(bear) == "{'a': 10, 'b': 100}"
+assert dir(bear) == ['a', 'b']
+assert list(iter(bear)) == ['a', 'b']
+assert dict(bear) == {'a': 10, 'b': 100}
+```
+
+### More Usages Could be Found in [test.py](./waterbear/test_waterbear.py)!
+
+```python
 test_dict = {
     'a': 0,
     'b': 1
