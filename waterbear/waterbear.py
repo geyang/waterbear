@@ -1,3 +1,6 @@
+import logging
+
+
 class Bear():
     def __init__(self, **d):
         """Features:
@@ -26,12 +29,12 @@ class Bear():
         self.__d = d
 
     def __getattribute__(self, item):
-        print("__getattribute__({})".format(item))
+        logging.debug("__getattribute__({})".format(item))
         return object.__getattribute__(self, item)
 
     @property
     def __dict__(self):
-        print("__dict__()")
+        logging.debug("__dict__()")
         return self.__d
 
     def __dir__(self):
@@ -54,7 +57,7 @@ class Bear():
         del self.__d[key]
 
     def __getattr__(self, item):
-        print("__getattr__({})".format(item))
+        logging.debug("__getattr__({})".format(item))
         try:
             value = self.__d[item]
         except KeyError:
@@ -75,7 +78,7 @@ class Bear():
             return value
 
     def __setattr__(self, key, value):
-        print("__setattr__({}, {})".format(key, value))
+        logging.debug("__setattr__({}, {})".format(key, value))
         if key[:7] == '_Bear__':
             super().__setattr__(key, value)
         elif key[:2] == '__':
