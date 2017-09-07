@@ -64,6 +64,17 @@ assert list(iter(bear)) == ['a', 'b']
 assert dict(bear) == {'a': 10, 'b': 100}
 ```
 
+### As Bool in Condition Logic
+
+When used in conditional logic, `Bear` and `DefaultBear` behaves exactly like an ordinary dictionary!
+
+```python
+def test_dict_comparison():
+    bear = Bear()
+    assert not {}, 'empty dictionary are treated as False value.'
+    assert not bear, 'bear should be treated as False value too!'
+```
+
 ### As A Base Class
 
 Waterbear is completely rewritten to play well with class extension!

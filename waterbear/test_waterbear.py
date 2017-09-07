@@ -53,8 +53,8 @@ def test_dict_methods():
 
 def test_dict_comparison():
     bear = Bear()
-    assert not {}, 'bear should be treated as False value.'
-    assert not bear, 'bear should be treated as False value.'
+    assert not {}, 'empty dictionary are treated as False value.'
+    assert not bear, 'bear should be treated as False value too!'
 
 
 def test_default_dict_methods():
