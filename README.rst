@@ -15,7 +15,7 @@ Todos
 Installation
 ============
 
-.. code:: python
+.. code-block:: python
 
     pip install waterbear # unfortuantely, tardigrade wouldn't work.
 
@@ -31,7 +31,7 @@ Bear allows you to pass in a default factory as the first argument.
 
 Example usage below:
 
-.. code:: python
+.. code-block:: python
 
     # Waterbear is a bear!
     from waterbear import Bear
@@ -43,7 +43,7 @@ Example usage below:
 Similar to ``collection.defaultdict``, there is ``DefaultBear``
 ---------------------------------------------------------------
 
-.. code:: python
+.. code-block:: python
 
     bear = DefaultBear(None, a=10, b=100)
     assert vars(bear) == {'a': 10, 'b': 100}
@@ -53,7 +53,7 @@ Similar to ``collection.defaultdict``, there is ``DefaultBear``
 and it also supports default factories
 --------------------------------------
 
-.. code:: python
+.. code-block:: python
 
     bear = DefaultBear(tuple, a=10, b=100)
     assert bear.does_not_exist is (), "default factory also works!"
@@ -61,7 +61,7 @@ and it also supports default factories
 You can also use it with ``vars``, ``str``, ``print(repr)``, ``dict`` etc.
 --------------------------------------------------------------------------
 
-.. code:: python
+.. code-block:: python
 
     bear = Bear(a=10, b=100)
     assert str(bear) == "{'a': 10, 'b': 100}"
@@ -72,7 +72,7 @@ You can also use it with ``vars``, ``str``, ``print(repr)``, ``dict`` etc.
 More Usages Could be Found in `test.py <./waterbear/test_waterbear.py>`__!
 --------------------------------------------------------------------------
 
-.. code:: python
+.. code-block:: python
 
     test_dict = {
         'a': 0,
@@ -114,7 +114,7 @@ More Usages Could be Found in `test.py <./waterbear/test_waterbear.py>`__!
 To Develop
 ==========
 
-.. code:: python
+.. code-block:: python
 
     git clone https://github.com/episodeyang/waterbear.git
     cd waterbear
@@ -126,7 +126,7 @@ current python environment. Take a look at the
 
 **To publish**, first update the version number, then do:
 
-.. code:: bash
+.. code-block:: bash
 
     make publish
 
