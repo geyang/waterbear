@@ -1,3 +1,5 @@
+import pickle
+
 from .waterbear import Bear, DefaultBear
 
 
@@ -61,6 +63,23 @@ def test_default_dict_methods():
     bear = DefaultBear(None, a=10, b=100)
     assert list(iter(bear)) == ['a', 'b']
     assert dict(bear) == {'a': 10, 'b': 100}
+
+
+def test_pickle_setstate_getstate():
+    # create a default bear with a default factory
+    bear = DefaultBear('hey', a=10, b=100)
+    pickle_string = pickle.dumps(bear)
+    bear_reborn = pickle.loads(pickle_string)
+    assert type(bear_reborn) == DefaultBear
+    assert vars(bear_reborn) == {'a': 10, 'b': 100}
+
+    bear = DefaultBear(lambda: 'hey', a=10, b=100)
+    function_fails = False
+    try:
+        pickle.dumps(bear)
+    except AttributeError as e:
+        function_fails = True
+    assert function_fails
 
 
 def test_as_dict_items():

@@ -28,4 +28,4 @@ publish: resize convert-rst
 	make wheel
 	twine upload dist/*
 test:
-	pytest
+	pytest --capture=no

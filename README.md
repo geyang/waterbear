@@ -75,6 +75,28 @@ def test_dict_comparison():
     assert not bear, 'bear should be treated as False value too!'
 ```
 
+### Using with Pickle
+
+When using with default factories, only non-callables are picklable.
+
+```python
+def test_pickle_setstate_getstate():
+    # create a default bear with a default factory
+    bear = DefaultBear('hey', a=10, b=100)
+    pickle_string = pickle.dumps(bear)
+    bear_reborn = pickle.loads(pickle_string)
+    assert type(bear_reborn) == DefaultBear
+    assert vars(bear_reborn) == {'a': 10, 'b': 100}
+
+    bear = DefaultBear(lambda: 'hey', a=10, b=100)
+    function_fails = False
+    try:
+        pickle.dumps(bear)
+    except AttributeError as e:
+        function_fails = True
+    assert function_fails
+```
+
 ### As A Base Class
 
 Waterbear is completely rewritten to play well with class extension!

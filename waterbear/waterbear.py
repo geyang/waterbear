@@ -17,6 +17,7 @@ class Bear():
             del d['__recursive']
         else:
             __recursive = True
+        self.__is_recursive = __recursive
         if '__default' in d:
             __default = d['__default']
             del d['__default']
@@ -25,7 +26,6 @@ class Bear():
         else:
             self.__has_default = False
         # keep the input as a reference. Destructuring breaks this reference.
-        self.__is_recursive = __recursive
         self.__d = d
 
     def __getattribute__(self, item):
@@ -39,6 +39,20 @@ class Bear():
     def __dict__(self):
         logging.debug("__dict__()")
         return self.__d
+
+    def __setstate__(self, state):
+        self.__d = state['__dict__']
+        self.__is_recursive = state["__is_recursive"]
+        self.__has_default = state["__has_default"]
+        self.__default = state["__default"]
+
+    def __getstate__(self):
+        return {
+            "__dict__": self.__dict__,
+            "__is_recursive": self.__is_recursive,
+            "__has_default": self.__has_default,
+            "__default": self.__default,
+        }
 
     def __bool__(self):
         return bool(self.__dict__)
