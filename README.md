@@ -1,4 +1,4 @@
-![waterbear_is_a_bear](./waterbear.jpg)
+![waterbear_is_a_bear](./figures/waterbear.jpg)
 
 # `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
 
@@ -119,4 +119,4 @@ make publish
 ```
 
 \* image credit goes to BBC [waterbear: The Smallest Bear!](http://www.bbc.com/earth/story/20150313-the-toughest-animals-on-earth) 😛
-![tardigrade](./waterbear_2.jpg)
+![tardigrade](./figures/waterbear_2.jpg)
