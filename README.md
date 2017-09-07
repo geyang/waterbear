@@ -1,19 +1,21 @@
 ![waterbear_is_a_bear](./figures/waterbear.jpg)
 
-# `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
+# `waterbear`, A Base Classs That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
 
 Now introducing the smallest bear! **Waterbear**.
 
 Waterbear makes it easy to use python dictionaries with dot notation!
 
-## Todos
-- [ ] merge `python2.7` version with `python3`
-- [ ] make another package called `tardigrade `
+## TODOs
+
+- [ ] fix class extension usage pattern
+- [ ] ~~merge `python2.7` version with `python3`~~
+- [ ] ~~make another package called `tardigrade `~~
 
 ## Installation 
 
 ```python
-pip install waterbear # unfortuantely, tardigrade wouldn't work.
+pip install waterbear
 ```
 
 ## Usage
@@ -43,7 +45,9 @@ assert vars(bear) == {'a': 10, 'b': 100}
 assert bear.does_not_exist is None, "default value works"
 ```
 
-### and it also supports default factories
+### DefaultBear like `defaultdict`
+
+You can use the `DefaultBear` class and pass in a default factor as the first parameter.
 
 ```python
 bear = DefaultBear(tuple, a=10, b=100)
@@ -60,6 +64,29 @@ assert list(iter(bear)) == ['a', 'b']
 assert dict(bear) == {'a': 10, 'b': 100}
 ```
 
+### As A Base Class
+
+Waterbear is completely rewritten to play well with class extension!
+
+```python
+class ExtendBear(Bear):
+    @property
+    def _hidden_stuff(self):
+        return "._hidden_stuff"
+
+    @property
+    def __mangled_stuff(self):
+        return ".__mangled_stuff"
+
+    @property
+    def __dict__(self):
+        return ".__dict__"
+
+e = ExtendBear()
+assert e.__dict__ == ".__dict__"
+assert e._hidden_stuff == '._hidden_stuff'
+assert e._ExtendBear__mangled_stuff == ".__mangled_stuff"
+```
 ### More Usages Could Be Found in The Tests!
 
 For more usage examples, take a look at [test.py](./waterbear/test_waterbear.py).

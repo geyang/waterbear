@@ -6,25 +6,26 @@
 
    waterbear\_is\_a\_bear
 
-``waterbear``, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
-===========================================================================================================================
+``waterbear``, A Base Classs That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
+===============================================================================================================================
 
 Now introducing the smallest bear! **Waterbear**.
 
 Waterbear makes it easy to use python dictionaries with dot notation!
 
-Todos
+TODOs
 -----
 
--  [ ] merge ``python2.7`` version with ``python3``
--  [ ] make another package called ``tardigrade``
+-  [ ] fix class extension usage pattern
+-  [ ] [STRIKEOUT:merge ``python2.7`` version with ``python3``]
+-  [ ] [STRIKEOUT:make another package called ``tardigrade``]
 
 Installation
 ------------
 
 .. code-block:: python
 
-    pip install waterbear # unfortuantely, tardigrade wouldn't work.
+    pip install waterbear
 
 Usage
 -----
@@ -57,8 +58,11 @@ Similar to ``collection.defaultdict``, there is ``DefaultBear``
 
     assert bear.does_not_exist is None, "default value works"
 
-and it also supports default factories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DefaultBear like ``defaultdict``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the ``DefaultBear`` class and pass in a default factor as
+the first parameter.
 
 .. code-block:: python
 
@@ -75,6 +79,31 @@ You can also use it with ``vars``, ``str``, ``print(repr)``, ``dict`` etc.
     assert dir(bear) == ['a', 'b']
     assert list(iter(bear)) == ['a', 'b']
     assert dict(bear) == {'a': 10, 'b': 100}
+
+As A Base Class
+~~~~~~~~~~~~~~~
+
+Waterbear is completely rewritten to play well with class extension!
+
+.. code-block:: python
+
+    class ExtendBear(Bear):
+        @property
+        def _hidden_stuff(self):
+            return "._hidden_stuff"
+
+        @property
+        def __mangled_stuff(self):
+            return ".__mangled_stuff"
+
+        @property
+        def __dict__(self):
+            return ".__dict__"
+
+    e = ExtendBear()
+    assert e.__dict__ == ".__dict__"
+    assert e._hidden_stuff == '._hidden_stuff'
+    assert e._ExtendBear__mangled_stuff == ".__mangled_stuff"
 
 More Usages Could Be Found in The Tests!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

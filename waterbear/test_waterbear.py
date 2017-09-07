@@ -23,7 +23,7 @@ def test():
     assert dir(test_args) == ['a', 'b', 'haha']
 
     test_args = Bear(__recursive=False, **test_dict)
-    assert test_args.__is_recursive == False
+    assert test_args._Bear__is_recursive == False
     assert test_args.a == 0
     assert test_args.b == 1
     test_args.haha = {'a': 1}
@@ -56,6 +56,7 @@ def test_default_dict_methods():
     assert list(iter(bear)) == ['a', 'b']
     assert dict(bear) == {'a': 10, 'b': 100}
 
+
 def test_as_dict_items():
     bear = DefaultBear(None, a=10, b=100)
     assert bear['a'] == 10
@@ -69,3 +70,53 @@ def test_dict_update():
     bear = DefaultBear(None, a=10, b=100)
     bear.update(a=11)
     bear['a'] = 11
+
+
+def test_simple_class_extension():
+    class ExtendBear(Bear):
+        @property
+        def _hidden_stuff(self):
+            return "._hidden_stuff"
+
+        @property
+        def __mangled_stuff(self):
+            return ".__mangled_stuff"
+
+        @property
+        def __dict__(self):
+            return ".__dict__"
+
+    e = ExtendBear()
+    assert e.__dict__ == ".__dict__"
+    assert e._hidden_stuff == '._hidden_stuff'
+    assert e._ExtendBear__mangled_stuff == ".__mangled_stuff"
+
+
+def test_class_extension():
+    class ExtendBear(Bear):
+        def __init__(self, debug_dict=True, **d):
+            super().__init__(**d)
+            self._debug_dict = debug_dict
+
+        def __some_method__(self):
+            return '.__some_method__'
+
+        @property
+        def __dict__(self):
+            if self._debug_dict:
+                return ".__dict__"
+            else:
+                return super().__dict__
+
+    e = ExtendBear()
+    assert e.__some_method__() == ".__some_method__"
+    assert e.__dict__ == ".__dict__"
+    e = ExtendBear(debug_dict=False)
+    assert e.__dict__ == {'_debug_dict': False}
+
+    raised_error = False
+    try:
+        print(e.does_not_exist)
+    except AttributeError:
+        raised_error = True
+    assert raised_error

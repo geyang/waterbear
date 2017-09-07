@@ -14,14 +14,25 @@ class Bear():
             del d['__recursive']
         else:
             __recursive = True
-        self.__is_recursive = __recursive
         if '__default' in d:
             __default = d['__default']
             del d['__default']
             self.__default = __default
             self.__has_default = True
+        else:
+            self.__has_default = False
         # keep the input as a reference. Destructuring breaks this reference.
+        self.__is_recursive = __recursive
         self.__d = d
+
+    def __getattribute__(self, item):
+        print("__getattribute__({})".format(item))
+        return object.__getattribute__(self, item)
+
+    @property
+    def __dict__(self):
+        print("__dict__()")
+        return self.__d
 
     def __dir__(self):
         return self.__dict__.keys()
@@ -42,16 +53,14 @@ class Bear():
     def __delitem__(self, key):
         del self.__d[key]
 
-    # def keys(self):
-    #     print("****************************************")
-    #     return self.__dict__.keys()
-
-    def __getattr__(self, key):
+    def __getattr__(self, item):
+        print("__getattr__({})".format(item))
         try:
-            value = self.__d[key]
+            value = self.__d[item]
         except KeyError:
-            if hasattr(self.__d, key):
-                return getattr(self.__d, key)
+            __d = self.__d
+            if hasattr(__d, item):
+                return getattr(__d, item)
             elif self.__has_default:
                 factory = self.__default
                 if callable(factory):
@@ -59,36 +68,18 @@ class Bear():
                 else:
                     value = factory
             else:
-                raise AttributeError("attribute {} does not exist".format(key))
+                raise AttributeError("attribute {} does not exist on {}".format(item, __d))
         if type(value) == dict and self.__is_recursive:
             return Bear(**value)
         else:
             return value
 
-    def __getattribute__(self, key):
-        d = super().__getattribute__('__d')
-        if key == "_Bear__d" or key == "__dict__":
-            return d
-        elif key in ["_Bear__is_recursive", "__is_recursive"]:
-            return super().__getattribute__("__is_recursive")
-        elif key in ["_Bear__default", "__default"]:
-            return super().__getattribute__("__default")
-        elif key in ["_Bear__has_default", "__has_default"]:
-            return super().__getattribute__("__has_default")
-        elif hasattr(d, key):
-            return getattr(d, key)
-        else:
-            return super().__getattr__(key)
-
     def __setattr__(self, key, value):
-        if key == "_Bear__d":
-            super().__setattr__("__d", value)
-        elif key == "_Bear__is_recursive":
-            super().__setattr__("__is_recursive", value)
-        elif key == "_Bear__default":
-            super().__setattr__("__default", value)
-        elif key == "_Bear__has_default":
-            super().__setattr__("__has_default", value)
+        print("__setattr__({}, {})".format(key, value))
+        if key[:7] == '_Bear__':
+            super().__setattr__(key, value)
+        elif key[:2] == '__':
+            super().__setattr__(key, value)
         else:
             self.__d[key] = value
 
