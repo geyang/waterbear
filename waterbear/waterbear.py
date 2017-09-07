@@ -40,6 +40,9 @@ class Bear():
         logging.debug("__dict__()")
         return self.__d
 
+    def __bool__(self):
+        return bool(self.__dict__)
+
     def __dir__(self):
         return self.__dict__.keys()
 

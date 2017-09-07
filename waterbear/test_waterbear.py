@@ -51,6 +51,12 @@ def test_dict_methods():
     assert dir(bear) == ['a', 'b']
 
 
+def test_dict_comparison():
+    bear = Bear()
+    assert not {}, 'bear should be treated as False value.'
+    assert not bear, 'bear should be treated as False value.'
+
+
 def test_default_dict_methods():
     bear = DefaultBear(None, a=10, b=100)
     assert list(iter(bear)) == ['a', 'b']
