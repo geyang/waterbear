@@ -10,7 +10,7 @@ dev:
 	pip install --ignore-installed dist/waterbear*.whl
 convert-rst:
 	pandoc -s README.md -o README.rst
-publish: convert-rst
+publish:
 	make test
 	make wheel
 	twine upload dist/*
