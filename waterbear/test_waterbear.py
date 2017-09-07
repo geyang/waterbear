@@ -65,7 +65,7 @@ def test_default_dict_methods():
     assert dict(bear) == {'a': 10, 'b': 100}
 
 
-def test_pickle_setstate_getstate():
+def test_pickle_basic():
     # create a default bear with a default factory
     bear = DefaultBear('hey', a=10, b=100)
     pickle_string = pickle.dumps(bear)
@@ -73,6 +73,8 @@ def test_pickle_setstate_getstate():
     assert type(bear_reborn) == DefaultBear
     assert vars(bear_reborn) == {'a': 10, 'b': 100}
 
+
+def test_pickle_callable():
     bear = DefaultBear(lambda: 'hey', a=10, b=100)
     function_fails = False
     try:
@@ -80,6 +82,14 @@ def test_pickle_setstate_getstate():
     except AttributeError as e:
         function_fails = True
     assert function_fails
+
+
+def test_pickle_non_default():
+    bear = Bear(a=10, b=100)
+    pickle_string = pickle.dumps(bear)
+    bear_reborn = pickle.loads(pickle_string)
+    assert type(bear_reborn) == Bear
+    assert vars(bear_reborn) == {'a': 10, 'b': 100}
 
 
 def test_as_dict_items():

@@ -44,15 +44,18 @@ class Bear():
         self.__d = state['__dict__']
         self.__is_recursive = state["__is_recursive"]
         self.__has_default = state["__has_default"]
-        self.__default = state["__default"]
+        if state['__has_default']:
+            self.__default = state["__default"]
 
     def __getstate__(self):
-        return {
+        state_dict = {
             "__dict__": self.__dict__,
             "__is_recursive": self.__is_recursive,
             "__has_default": self.__has_default,
-            "__default": self.__default,
         }
+        if state_dict['__has_default']:
+            state_dict["__default"] = self.__default
+        return state_dict
 
     def __bool__(self):
         return bool(self.__dict__)
