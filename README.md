@@ -40,7 +40,7 @@ assert vars(bear) == {'a': 10, 'b': 100}
 assert bear.does_not_exist is None, "default value works"
 ```
 
-#### Support default Factories
+### and it also supports default factories
 
 ```python
 bear = DefaultBear(tuple, a=10, b=100)
