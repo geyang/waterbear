@@ -1,4 +1,5 @@
-![waterbear_is_a_bear](waterbear.jpg)
+![waterbear_is_a_bear](./waterbear.jpg)
+
 # `waterbear`, A Utility That Makes Python Dictionary Accessible With The Dot Notation, Recursively and with Default Values
 
 Now introducing the smallest bear! **Waterbear**.
@@ -14,7 +15,9 @@ Waterbear makes it easy to use python dictionaries with dot notation!
 ```python
 pip install waterbear # unfortuantely, tardigrade wouldn't work.
 ```
+
 ## Usage
+
 For more usage examples, take a look at the [test.py](./waterbear/test_waterbear.py)!
 
 There are two classes, the `Bear` and the `DefaultBear`. Default Bear allows you to pass in a
@@ -57,7 +60,9 @@ assert list(iter(bear)) == ['a', 'b']
 assert dict(bear) == {'a': 10, 'b': 100}
 ```
 
-### More Usages Could be Found in [test.py](./waterbear/test_waterbear.py)!
+### More Usages Could Be Found in The Tests!
+
+For more usage examples, take a look at [test.py](./waterbear/test_waterbear.py).
 
 ```python
 test_dict = {
@@ -114,4 +119,4 @@ make publish
 ```
 
 \* image credit goes to BBC [waterbear: The Smallest Bear!](http://www.bbc.com/earth/story/20150313-the-toughest-animals-on-earth) 😛
-![tardigrade](waterbear_2.jpg)
+![tardigrade](./waterbear_2.jpg)
