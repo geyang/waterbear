@@ -29,32 +29,54 @@ class Bear():
     def __str__(self):
         return str(self.__dict__)
 
+    def __iter__(self):
+        # Not called during dict(bear)
+        return self.__dict__.__iter__()
+
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+    def __setitem__(self, key, value):
+        return setattr(self, key, value)
+
+    def __delitem__(self, key):
+        del self.__d[key]
+
+    # def keys(self):
+    #     print("****************************************")
+    #     return self.__dict__.keys()
+
     def __getattr__(self, key):
         try:
             value = self.__d[key]
         except KeyError:
-            if self.__has_default:
+            if hasattr(self.__d, key):
+                return getattr(self.__d, key)
+            elif self.__has_default:
                 factory = self.__default
                 if callable(factory):
                     value = factory()
                 else:
                     value = factory
             else:
-                raise KeyError(key, "does not exist")
+                raise AttributeError("attribute {} does not exist".format(key))
         if type(value) == dict and self.__is_recursive:
             return Bear(**value)
         else:
             return value
 
     def __getattribute__(self, key):
+        d = super().__getattribute__('__d')
         if key == "_Bear__d" or key == "__dict__":
-            return super().__getattribute__("__d")
+            return d
         elif key in ["_Bear__is_recursive", "__is_recursive"]:
             return super().__getattribute__("__is_recursive")
         elif key in ["_Bear__default", "__default"]:
             return super().__getattribute__("__default")
         elif key in ["_Bear__has_default", "__has_default"]:
             return super().__getattribute__("__has_default")
+        elif hasattr(d, key):
+            return getattr(d, key)
         else:
             return super().__getattr__(key)
 

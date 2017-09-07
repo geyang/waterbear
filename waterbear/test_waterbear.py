@@ -20,6 +20,7 @@ def test():
     assert vars(test_args)['haha']['a'] == 1
     assert str(test_args) == "{'a': 0, 'b': 1, 'haha': {'a': 1}}", \
         'test_args should be this value "{\'a\': 0, \'b\': 1, \'haha\': {\'a\': 1}}"'
+    assert dir(test_args) == ['a', 'b', 'haha']
 
     test_args = Bear(__recursive=False, **test_dict)
     assert test_args.__is_recursive == False
@@ -44,3 +45,27 @@ def test_default_bear():
     assert bear.does_not_exist is ()
 
 
+def test_dict_methods():
+    bear = Bear(a=10, b=100)
+    assert str(bear) == "{'a': 10, 'b': 100}"
+    assert dir(bear) == ['a', 'b']
+
+
+def test_default_dict_methods():
+    bear = DefaultBear(None, a=10, b=100)
+    assert list(iter(bear)) == ['a', 'b']
+    assert dict(bear) == {'a': 10, 'b': 100}
+
+def test_as_dict_items():
+    bear = DefaultBear(None, a=10, b=100)
+    assert bear['a'] == 10
+    bear['a'] = 11
+    assert bear['a'] == 11
+    del bear['a']
+    assert bear['a'] is None
+
+
+def test_dict_update():
+    bear = DefaultBear(None, a=10, b=100)
+    bear.update(a=11)
+    bear['a'] = 11
