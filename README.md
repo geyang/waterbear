@@ -97,6 +97,20 @@ def test_pickle_setstate_getstate():
     assert function_fails
 ```
 
+### Using deepcopy
+
+You can just do `copy.deepcopy(bear)`!
+
+```python
+def test_deepcopy():
+    from copy import deepcopy
+    original = Bear(a=1, b={'ha': 0})
+    copy = deepcopy(original)
+    copy.b.ha += 1
+    assert copy.b.ha == 1
+    assert original.b.ha == 0
+```
+
 ### As A Base Class
 
 Waterbear is completely rewritten to play well with class extension!

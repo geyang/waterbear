@@ -1,5 +1,7 @@
 import logging
 
+from copy import deepcopy
+
 
 class Bear():
     def __init__(self, **d):
@@ -33,7 +35,10 @@ class Bear():
         return object.__getattribute__(self, item)
 
     def __deepcopy__(self, memodict={}):
-        raise NotImplementedError('todo: need to implement deepcopy')
+        if self.__has_default:
+            return Bear(__default=self.__default, __recursive=self.__is_recursive, **deepcopy(dict(self)))
+        else:
+            return Bear(__recursive=self.__is_recursive, **deepcopy(dict(self)))
 
     @property
     def __dict__(self):

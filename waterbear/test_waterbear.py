@@ -92,6 +92,15 @@ def test_pickle_non_default():
     assert vars(bear_reborn) == {'a': 10, 'b': 100}
 
 
+def test_deepcopy():
+    from copy import deepcopy
+    original = Bear(a=1, b={'ha': 0})
+    copy = deepcopy(original)
+    copy.b.ha += 1
+    assert copy.b.ha == 1
+    assert original.b.ha == 0
+
+
 def test_as_dict_items():
     bear = DefaultBear(None, a=10, b=100)
     assert bear['a'] == 10
