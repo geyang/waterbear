@@ -6,6 +6,27 @@ Now introducing the smallest bear! **Waterbear**.
 
 Waterbear makes it easy to use python dictionaries with dot notation!
 
+## What does `Waterbear`:bear: do?
+
+`Waterbear` is like `defaultdict` + `SimpleNameSpace` + `namedtuples`.
+
+`Waterbear` is similar in usage to `namedtuples` or `recordtypes`, but it is not a tuple or array type but a dictionary. The distinction
+is that `Waterbear` attributes are accessible via `key` strings instead of index numbers.
+
+`Waterbear` is more similar to `types.SimpleNamespace`. However, a major difference is that `Waterbear` enables:
+
+- setting default values via a `default_factory` during instantiation
+- all attributes are recognized by IDE's static type-checking so they have auto-completion without having to be used first.
+- work recursively
+
+Now with all of these three, there isn't an alternative solution available. libraries like `Munch`
+has bad support for pythonic idioms. In this case `Waterbear` allows you to:
+
+- use `vars(bear)` to convert the bear object into a dictionary.
+- use `dict(bear)` for the same purpose
+- use `print(bear)` and get a dictionary string
+- ... all methods that are available in a python `dict` object
+
 ## TODOs
 
 - [ ] fix class extension usage pattern
