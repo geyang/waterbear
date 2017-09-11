@@ -95,10 +95,27 @@ def test_pickle_non_default():
 def test_deepcopy():
     from copy import deepcopy
     original = Bear(a=1, b={'ha': 0})
+    original.a = 5
+    assert original.a == 5
+    original.b.ha = 1
+    assert original.b.ha == 1
+    original['b']['ha'] = 1
+    assert original.b.ha == 1
     copy = deepcopy(original)
     copy.b.ha += 1
-    assert copy.b.ha == 1
-    assert original.b.ha == 0
+    assert copy.b.ha == 2
+    assert original.b.ha == 1
+
+
+def test_copy():
+    from copy import copy
+    original = Bear(a=1, b={'ha': 0})
+    original.b.ha += 1
+    assert original.b.ha == 1, 'original works.'
+    new = copy(original)
+    new.b.ha = 5
+    assert new.b.ha == 5, "copy works"
+    assert original.b.ha == 5, 'original is linked because this is a shallow copy.'
 
 
 def test_as_dict_items():

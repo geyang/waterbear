@@ -39,6 +39,21 @@ class Bear():
             return Bear(__default=self.__default, __recursive=self.__is_recursive, **deepcopy(dict(self)))
         else:
             return Bear(__recursive=self.__is_recursive, **deepcopy(dict(self)))
+            # todo: use memodict to avoid infinite recursion.
+            # not_there = []
+            # existing = memo.get(self, not_there)
+            # if existing is not not_there:
+            #     print
+            #     '  ALREADY COPIED TO', repr(existing)
+            #     return existing
+            # pprint.pprint(memo, indent=4, width=40)
+            # dup = Graph(copy.deepcopy(self.name, memo), [])
+            # print
+            # '  COPYING TO', repr(dup)
+            # memo[self] = dup
+            # for c in self.connections:
+            #     dup.addConnection(copy.deepcopy(c, memo))
+            # return dup
 
     @property
     def __dict__(self):
@@ -101,16 +116,18 @@ class Bear():
             else:
                 raise AttributeError("attribute {} does not exist on {}".format(item, __d))
         if type(value) == dict and self.__is_recursive:
-            return Bear(**value)
+            bear = Bear()
+            bear.__d = value
+            return bear
         else:
             return value
 
     def __setattr__(self, key, value):
         logging.debug("__setattr__({}, {})".format(key, value))
         if key[:7] == '_Bear__':
-            super().__setattr__(key, value)
+            object.__setattr__(self, key, value)
         elif key[:2] == '__':
-            super().__setattr__(key, value)
+            object.__setattr__(self, key, value)
         else:
             self.__d[key] = value
 
