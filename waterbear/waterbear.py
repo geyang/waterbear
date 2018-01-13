@@ -133,5 +133,5 @@ class Bear():
 
 
 class DefaultBear(Bear):
-    def __init__(self, default, **d):
-        super().__init__(__default=default, **d)
+    def __init__(self, __default, **d):
+        super().__init__(__default=__default, **d)
