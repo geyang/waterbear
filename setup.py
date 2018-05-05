@@ -4,11 +4,13 @@ from setuptools import setup
 
 with open(path.join(path.abspath(path.dirname(__file__)), 'README'), encoding='utf-8') as f:
     long_description = f.read()
+with open(path.join(path.abspath(path.dirname(__file__)), 'VERSION'), encoding='utf-8') as f:
+    version = f.read()
 
 setup(name='waterbear',
       description='A utility that makes it easy to use dot notation with python dictionaries',
       long_description=long_description,
-      version='2.5.0',
+      version=version,
       url='https://github.com/episodeyang/waterbear',
       author='Ge Yang',
       author_email='yangge1987@gmail.com',

@@ -46,6 +46,19 @@ def test_default_bear():
     bear = DefaultBear(tuple, a=10, b=100)
     assert bear.does_not_exist is ()
 
+    bear = DefaultBear(list)
+    assert bear.not_idempotent == [], 'query attribute adds a new value.'
+    bear.not_idempotent.append('ha')
+    assert bear.not_idempotent == ['ha']
+
+    bear = DefaultBear(list)
+    bear.not_idempotent.append('ha')  # directly append to it also works.
+    assert bear.not_idempotent == ['ha'], 'calling attribute adds a new value too.'
+
+    # Idempotent Case
+    bear = DefaultBear(list, _idempotent_get=True)
+    bear.not_idempotent.append('ha')
+    assert bear.not_idempotent == [], 'calling attribute does NOT add new values in idempotent mode.'
 
 def test_dict_methods():
     bear = Bear(a=10, b=100)
