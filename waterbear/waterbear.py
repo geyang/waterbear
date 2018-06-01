@@ -43,7 +43,7 @@ class Bear():
         self.__d = d
 
     def __getattribute__(self, item):
-        logging.debug("__getattribute__({})".format(item))
+        # logging.debug("__getattribute__({})".format(item))
         return object.__getattribute__(self, item)
 
     def __deepcopy__(self, memodict=None):
@@ -71,7 +71,7 @@ class Bear():
 
     @property
     def __dict__(self):
-        logging.debug("__dict__()")
+        # logging.debug("__dict__()")
         return self.__d
 
     def __setstate__(self, state):
@@ -116,7 +116,7 @@ class Bear():
         del self.__d[key]
 
     def __getattr__(self, item):
-        logging.debug("__getattr__({})".format(item))
+        # logging.debug("__getattr__({})".format(item))
         try:
             value = self.__d[item]
         except KeyError:
@@ -142,7 +142,7 @@ class Bear():
             return value
 
     def __setattr__(self, key, value):
-        logging.debug("__setattr__({}, {})".format(key, value))
+        # logging.debug("__setattr__({}, {})".format(key, value))
         if key[:7] == '_Bear__':
             object.__setattr__(self, key, value)
         elif key[:2] == '__':
