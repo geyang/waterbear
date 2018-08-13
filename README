@@ -184,6 +184,44 @@ Waterbear is completely rewritten to play well with class extension!
     assert e._hidden_stuff == '._hidden_stuff'
     assert e._ExtendBear__mangled_stuff == ".__mangled_stuff"
 
+Order Preserving SimpleNamespace
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In tensorflow, you frequently need order preserving namespaces that you
+can use for ``sess.run([tensors...``. We built ``OrderedBear`` exactly
+for this purpose. It is an extension of the ``types.SimpleNamespace``
+class.
+
+::
+
+    # First declare the typings (namespace) for your model
+    class Reporting:
+        loss=None
+        entropy=None
+        mean_kl=None
+
+    # Now, you can instantiate this with new values
+
+    ... inside model
+
+        r = Reporting(entropy=-5, loss=1)
+        # Notice that 1. we are putting values in out-of-order, and 2. We are missing `mean_kl` in our construction.
+
+        tems = r.items()
+        assert items[0] == ('loss', 1), 'order follows class declaration.'
+        assert items[1] == ('entropy', -5), 'entropy goes after loss even though this is the second atrribute'
+        assert items[2] == ('mean_kl', None), 'undefined falls back to the default'
+
+        values = r.values()
+        assert values[0] == 1, 'order follows class declaration.'
+        assert values[1] == -5, 'entropy goes after loss even though this is the second atrribute'
+        assert values[2] == None, 'undefined falls back to the default'
+
+        keys = r.keys()
+        assert keys[0] == 'loss', 'order follows class declaration.'
+        assert keys[1] == 'entropy', 'entropy goes after loss even though this is the second atrribute'
+        assert keys[2] == 'mean_kl', 'undefined falls back to the default'
+
 More Usages Could Be Found in The Tests!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

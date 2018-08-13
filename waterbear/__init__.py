@@ -1,1 +1,1 @@
-from .waterbear import Bear, DefaultBear
+from .waterbear import Bear, DefaultBear, OrderedBear
