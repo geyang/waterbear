@@ -1,6 +1,6 @@
 import pickle
 
-from .waterbear import Bear, DefaultBear
+from .waterbear import Bear, DefaultBear, OrderedBear
 
 
 def test():
@@ -59,6 +59,7 @@ def test_default_bear():
     bear = DefaultBear(list, _idempotent_get=True)
     bear.not_idempotent.append('ha')
     assert bear.not_idempotent == [], 'calling attribute does NOT add new values in idempotent mode.'
+
 
 def test_dict_methods():
     bear = Bear(a=10, b=100)
@@ -197,3 +198,29 @@ def test_class_extension():
     except AttributeError:
         raised_error = True
     assert raised_error
+
+
+
+
+def test_order_bear():
+    class Reports(OrderedBear):
+        loss = None
+        entropy = None
+        mean_kl = None
+
+    r = Reports(entropy=0, loss=1)
+
+    items = r.items()
+    assert items[0] == ('loss', 1), 'order follows class declaration.'
+    assert items[1] == ('entropy', 0), 'entropy goes after loss even though this is the second atrribute'
+    assert items[2] == ('mean_kl', None), 'undefined falls back to the default'
+
+    values = r.values()
+    assert values[0] == 1, 'order follows class declaration.'
+    assert values[1] == 0, 'entropy goes after loss even though this is the second atrribute'
+    assert values[2] == None, 'undefined falls back to the default'
+
+    keys = r.keys()
+    assert keys[0] == 'loss', 'order follows class declaration.'
+    assert keys[1] == 'entropy', 'entropy goes after loss even though this is the second atrribute'
+    assert keys[2] == 'mean_kl', 'undefined falls back to the default'

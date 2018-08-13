@@ -161,3 +161,21 @@ class DefaultBear(Bear):
         :param d: key-value pairs.
         """
         super().__init__(__default=_default, __idempotent_get=_idempotent_get, **d)
+
+
+from types import SimpleNamespace
+
+
+class OrderedBear(SimpleNamespace):
+    __RESERVED_KEYS = 'items', 'values', 'keys'
+
+    def items(self):
+        return [(k, getattr(self, k)) for k in self.__class__.__dict__.keys() if
+                not k.startswith('_') and k not in self.__RESERVED_KEYS]
+
+    def values(self):
+        return [getattr(self, k) for k in self.__class__.__dict__.keys() if
+                not k.startswith('_') and k not in self.__RESERVED_KEYS]
+
+    def keys(self):
+        return [k for k in self.__class__.__dict__.keys() if not k.startswith('_') and k not in self.__RESERVED_KEYS]
