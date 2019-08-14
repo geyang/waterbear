@@ -1,6 +1,6 @@
 BSD License
 
-For params-proto software
+For waterbear software
 
 Copyright (c) 2017-present, Ge Yang. All rights reserved.
 
