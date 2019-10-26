@@ -142,13 +142,20 @@ class Bear():
             return value
 
     def __setattr__(self, key, value):
-        # logging.debug("__setattr__({}, {})".format(key, value))
         if key[:7] == '_Bear__':
             object.__setattr__(self, key, value)
         elif key[:2] == '__':
             object.__setattr__(self, key, value)
         else:
             self.__d[key] = value
+
+    def __delattr__(self, item):
+        if item[:7] == '_Bear__':
+            object.__delattr__(self, item)
+        elif item[:2] == '__':
+            object.__delattr__(self, item)
+        else:
+            del self.__d[item]
 
 
 class DefaultBear(Bear):

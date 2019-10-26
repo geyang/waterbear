@@ -144,6 +144,33 @@ def test_as_dict_items():
     assert bear['b'] == 101
 
 
+def test_as_object():
+    bear = Bear(a=10, b=100)
+    assert bear.a == 10
+    bear.a = 11
+    assert bear.a == 11
+
+    del bear.a
+    assert not hasattr(bear, 'a'), "the attribute `a` should not exist"
+
+    delattr(bear, 'b')
+    assert not hasattr(bear, 'b'), "the attribute `b` should not exist"
+
+    bear = DefaultBear(None, a=10, b=100)
+    assert bear.a == 10
+    bear.a = 11
+    assert bear.a == 11
+
+    del bear.a
+    assert hasattr(bear, 'a'), "DefaultBear always has the attribute"
+    assert bear['a'] is None
+
+    delattr(bear, 'b')
+    assert hasattr(bear, 'b'), "DefaultBear always has the attribute"
+    assert bear['b'] is None
+
+
+
 def test_dict_update():
     bear = DefaultBear(None, a=10, b=100)
     bear.update(a=11)
@@ -198,8 +225,6 @@ def test_class_extension():
     except AttributeError:
         raised_error = True
     assert raised_error
-
-
 
 
 def test_order_bear():
