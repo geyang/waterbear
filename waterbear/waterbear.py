@@ -43,8 +43,20 @@ class Bear():
         self.__d = d
 
     def __getattribute__(self, item):
-        # logging.debug("__getattribute__({})".format(item))
-        return object.__getattribute__(self, item)
+        # Note: Because we make a `__d` call, we need to filter for recursion.
+        # Note: Always check the dictionary first.
+        if item.startswith("__") or item.startswith("_Bear"):
+            return super(Bear, self).__getattribute__(item)
+        try:
+            value = self.__d[item]
+            if type(value) == dict and self.__is_recursive:
+                bear = Bear()
+                bear.__d = value
+                return bear
+            else:
+                return value
+        except:
+            return super(Bear, self).__getattribute__(item)
 
     def __deepcopy__(self, memodict=None):
         # if memodict is None:
