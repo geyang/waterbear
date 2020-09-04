@@ -4,6 +4,10 @@ from copy import deepcopy
 
 
 class Bear():
+    def __init_subclass__(cls, **kwargs):
+        # intercept the kwargs in the init_subclass call
+        super().__init_subclass__()
+
     def __init__(self, **d):
         """Features:
 
