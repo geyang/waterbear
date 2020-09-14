@@ -62,6 +62,14 @@ class Bear():
         except:
             return super(Bear, self).__getattribute__(item)
 
+    def __copy__(self):
+        if self.__has_default:
+            return Bear(__default=self.__default, __recursive=self.__is_recursive, **vars(self))
+        else:
+            return Bear(__recursive=self.__is_recursive, **vars(self))
+
+    copy = __copy__
+
     def __deepcopy__(self, memodict=None):
         # if memodict is None:
         #     memodict = dict()
