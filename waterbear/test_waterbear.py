@@ -64,6 +64,7 @@ def test_default_bear():
 def test_dict_methods():
     bear = Bear(a=10, b=100)
     assert str(bear) == "{'a': 10, 'b': 100}"
+    assert str(bear.__dict__) == "{'a': 10, 'b': 100}"
     assert dir(bear) == ['a', 'b']
 
 

@@ -3,13 +3,23 @@ import logging
 from copy import deepcopy
 
 
-class Bear():
+class Bear:
+    """
+    Bear automatically injects the key value pairs into the class at construction.
+
+    Note: Bear does NOT automatically inject attributes of the current name space
+        into the dictionary. This ia  good thing. To use the object as a namespace,
+        use params-proto's ParamsProto or PrefixProto instead.
+
+    - Ge
+    """
     def __init_subclass__(cls, **kwargs):
         # intercept the kwargs in the init_subclass call
         super().__init_subclass__()
 
     def __init__(self, **d):
-        """Features:
+        """
+        Features:
 
         0. Take in a list of keyword arguments in constructor, and assign them as attributes
         1. Correctly handles `dir` command, so shows correct auto-completion in editors.
@@ -47,8 +57,20 @@ class Bear():
         self.__d = d
 
     def __getattribute__(self, item):
-        # Note: Because we make a `__d` call, we need to filter for recursion.
-        # Note: Always check the dictionary first.
+        """
+        Waterbear get attribute method. Deligate to system default if
+        the attribute is not found in the local dictionary.
+
+        Child classes need to escape things like static methods, properties etc.
+        in the Bear constructor, so that they are not returned as is.
+
+        1. First try to detect if method is private
+        2. then tries to retrieve it from the local dict
+        3. If that fails, try using super method again.
+
+        note-1: Because we make a `__d` call, we need to filter for recursion.
+        note-2: Always check the dictionary first.
+        """
         if item.startswith("__") or item.startswith("_Bear"):
             return super(Bear, self).__getattribute__(item)
         try:
