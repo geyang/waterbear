@@ -13,6 +13,7 @@ class Bear:
 
     - Ge
     """
+
     def __init_subclass__(cls, **kwargs):
         # intercept the kwargs in the init_subclass call
         super().__init_subclass__()
@@ -36,23 +37,11 @@ class Bear:
         """
         # double underscore variables are mangled by python, so we use keyword argument dictionary instead.
         # Otherwise you will have to use __Bear_recursive = False instead.
-        if '__recursive' in d:
-            __recursive = d['__recursive']
-            del d['__recursive']
-        else:
-            __recursive = True
-        self.__is_recursive = __recursive
-        if '__default' in d:
-            self.__default = d['__default']
-            del d['__default']
-            self.__has_default = True
-        else:
-            self.__has_default = False
-        if '__idempotent_get' in d:
-            self.__idempotent_get = d['__idempotent_get']
-            del d['__idempotent_get']
-        else:
-            self.__idempotent_get = False  # the default value of idempotent_get is False.
+        self.__is_recursive = d.pop("__recursive", True)
+        self.__has_default = ("__default" in d)
+        self.__default = d.pop("__default", None)
+        self.__idempotent_get = d.pop("__idempotent_get", False)
+
         # keep the input as a reference. Destructuring breaks this reference.
         self.__d = d
 
